@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок | Neologisms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --header-height: 84px;
+            --ink: #172133;
+            --muted: #52607d;
+            --panel: #ffffff;
+            --bg: linear-gradient(180deg, #f9fbff 0%, #eef3ff 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Raleway", Arial, sans-serif;
+            color: var(--ink);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        .header-wrap {
+            position: fixed;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 999px;
+            background: rgba(17, 27, 56, 0.72);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+        }
+
+        .hero-nav a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 134px;
+            height: 42px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+        }
+
+        .hero-nav a.is-active {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        main {
+            width: min(1120px, calc(100% - 32px));
+            margin: 124px auto 40px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .section {
+            background: var(--panel);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 45px rgba(17, 27, 56, 0.1);
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+            font-weight: 800;
+        }
+
+        .lead {
+            margin: 0;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .score-badge {
+            margin-top: 14px;
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: #edf2ff;
+            color: #2344b3;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .word-bank {
+            margin: 14px 0 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .word-item {
+            display: inline-block;
+            padding: 7px 11px;
+            border-radius: 999px;
+            border: 1px solid #d2ddff;
+            background: #f4f7ff;
+            color: #294080;
+            font-size: 0.88rem;
+            font-weight: 700;
+        }
+
+        .question {
+            padding: 14px 14px 12px;
+            border: 1px solid #dce5ff;
+            border-radius: 14px;
+            background: #fafcff;
+            margin-bottom: 12px;
+        }
+
+        .question-title {
+            margin: 0 0 8px;
+            font-weight: 700;
+            color: #24375f;
+        }
+
+        .question-title strong {
+            display: inline-block;
+            padding: 1px 7px;
+            border-radius: 8px;
+            border: 1px solid #8aa6ff;
+            background: #eaf0ff;
+            color: #18367e;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+        }
+
+        .answer-input {
+            width: 100%;
+            min-height: 90px;
+            border: 1px solid #cfdcff;
+            border-radius: 10px;
+            padding: 10px;
+            font: inherit;
+            color: #1c2c50;
+            resize: vertical;
+            background: #ffffff;
+        }
+
+        .answer-review {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f1f5ff;
+            display: none;
+        }
+
+        .answer-review.visible {
+            display: block;
+        }
+
+        .answer-key {
+            margin: 0 0 10px;
+            color: #24375f;
+            font-weight: 600;
+        }
+
+        .mark-tools {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mark-btn {
+            border: 1px solid #ccdaff;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font: inherit;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #2b3e67;
+            cursor: pointer;
+        }
+
+        .mark-btn.is-selected {
+            border-color: #7a94e8;
+            background: #e9efff;
+        }
+
+        .mark-indicator {
+            font-size: 1.2rem;
+            font-weight: 800;
+            min-width: 24px;
+        }
+
+        .mark-indicator.correct {
+            color: #1f9f55;
+        }
+
+        .mark-indicator.wrong {
+            color: #cf3f3f;
+        }
+
+        .actions {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-btn {
+            border: none;
+            border-radius: 999px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font: inherit;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+        }
+
+        .action-btn.save {
+            background: linear-gradient(135deg, #355de7, #2648bc);
+        }
+
+        .action-btn.show {
+            background: linear-gradient(135deg, #4b83f0, #2f63d5);
+        }
+
+        .action-btn.reset {
+            background: linear-gradient(135deg, #8d95a8, #71798c);
+        }
+    </style>
+</head>
+<body>
+    <header class="header-wrap">
+        <nav class="hero-nav" aria-label="Main navigation">
+            <a href="index.html">Главная</a>
+            <a class="is-active" href="learning.html">Обучение</a>
+            <a href="statistics.html">Статистика</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <h1 id="lesson-title">Урок</h1>
+            <p class="lead" id="lesson-instruction"></p>
+            <div class="word-bank" id="word-bank" hidden></div>
+            <div class="score-badge" id="score-badge">Результат: не оценено</div>
+        </section>
+
+        <section class="section">
+            <div id="questions-wrap"></div>
+            <div class="actions">
+                <button class="action-btn save" type="button" id="save-exit">Сохранить и выйти</button>
+                <button class="action-btn show" type="button" id="show-answers">Показать ответы для проверки</button>
+                <button class="action-btn reset" type="button" id="reset-answers">Сбросить все ответы</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        (function () {
+            const LESSONS = {
+                1: {
+                    title: "Разбор неологизмов на исходные слова",
+                    instruction: "Разделите слово на исходные части и предположите значение неологизма.",
+                    questions: [
+                        "fitspiration",
+                        "bookaholic",
+                        "coffice",
+                        "frenemy",
+                        "chairdrobe"
+                    ],
+                    answers: [
+                        "fit + inspiration — motivation from fitness content",
+                        "book + (a)holic — a person addicted to books",
+                        "coffee + office — working from a cafe",
+                        "friend + enemy — a friend you also dislike",
+                        "chair + wardrobe — clothes pile on a chair"
+                    ]
+                },
+                2: {
+                    title: "Создание неологизмов из двух слов",
+                    instruction: "Соедините слова, чтобы получить неологизм, и укажите его значение.",
+                    questions: [
+                        "day + vacation",
+                        "screen + teenager",
+                        "blogger + book",
+                        "exercise + game",
+                        "web + English"
+                    ],
+                    answers: [
+                        "daycation — a short one-day vacation",
+                        "screenager — a teenager spending much time with screens",
+                        "blook — a blog published as a book",
+                        "exergame — a game that requires physical movement",
+                        "Weblish — internet-influenced English style"
+                    ]
+                },
+                3: {
+                    title: "Понимание значения по контексту",
+                    instruction: "Прочитайте предложение и объясните выделенный неологизм по контексту.",
+                    questions: [
+                        "We <strong>google</strong> things, we <strong>uber</strong> places, and we get upset when someone is <strong>ghosting</strong> us.",
+                        "I have <strong>a corona cut</strong> now and I can hardly manage my hair.",
+                        "I don’t like <strong>a floordrobe</strong> in the corner of my bedroom.",
+                        "I <strong>hate-watch</strong> some TV shows because it helps me to relax.",
+                        "We always greet each other with <strong>a bro hug</strong>."
+                    ],
+                    answers: [
+                        "google/uber/ghosting: search online, use Uber, ignore someone in messages",
+                        "corona cut: a bad DIY haircut associated with lockdown period",
+                        "floordrobe: clothes left on the floor instead of wardrobe",
+                        "hate-watch: watch something you dislike for entertainment",
+                        "bro hug: a friendly hug between close male friends"
+                    ]
+                },
+                4: {
+                    title: "Вставка неологизмов в предложения",
+                    instruction: "Подставьте подходящий неологизм в каждое предложение, используя слова из списка.",
+                    word_bank: ["a wasband", "dude food", "sofalize", "to binge-watch", "a hot mess"],
+                    questions: [
+                        "We had a real ______ with our exams last term.",
+                        "Sally was embarrassed to meet her ______ at the party.",
+                        "I have been having ______ since my parents went on holiday.",
+                        "I can’t stop ______ this new series.",
+                        "I’m going to laze around and ______ all weekend."
+                    ],
+                    answers: [
+                        "a hot mess",
+                        "wasband",
+                        "dude food",
+                        "to binge-watch",
+                        "sofalize"
+                    ]
+                },
+                5: {
+                    title: "Перевод предложений с неологизмами",
+                    instruction: "Переведите предложение, используя слова из списка ниже.",
+                    word_bank: ["Barbie dream", "to photobomb", "a nothing burger", "getatable", "netizen"],
+                    questions: [
+                        "Ездить по центру города без пробок — это розовая мечта современного человека.",
+                        "Домашнее задание по физике было очень простым.",
+                        "В больших семьях тяжело собраться всем вместе на праздники.",
+                        "Не звони ему, он отвечает только в мессенджерах, он онлайн 24/7.",
+                        "Если бы этот мужчина не влез в кадр, фото было бы идеальным."
+                    ],
+                    answers: [
+                        "Barbie dream - 'a pink dream', an idealized unrealistic wish.",
+                        "a nothing burger - something unimportant, trivial, not worth attention.",
+                        "getatable - possible to gather everyone together in one place.",
+                        "netizen - an active internet user, someone always online.",
+                        "to photobomb - to get into someone's photo frame unexpectedly."
+                    ]
+                }
+            };
+
+            const params = new URLSearchParams(window.location.search);
+            const parsedLessonId = Number(params.get("lesson"));
+            const lessonId = Number.isInteger(parsedLessonId) && LESSONS[parsedLessonId] ? parsedLessonId : 1;
+            const lesson = LESSONS[lessonId];
+
+            const lessonTitle = document.getElementById("lesson-title");
+            const lessonInstruction = document.getElementById("lesson-instruction");
+            const wordBankNode = document.getElementById("word-bank");
+            const questionsWrap = document.getElementById("questions-wrap");
+            const scoreBadge = document.getElementById("score-badge");
+
+            lessonTitle.textContent = `Урок ${lessonId} — ${lesson.title}`;
+            document.title = `Урок ${lessonId} | Neologisms`;
+            lessonInstruction.textContent = lesson.instruction;
+
+            if (Array.isArray(lesson.word_bank) && lesson.word_bank.length > 0) {
+                wordBankNode.hidden = false;
+                wordBankNode.innerHTML = lesson.word_bank
+                    .map((word) => `<span class="word-item">${word}</span>`)
+                    .join("");
+            }
+
+            const questionMarkup = lesson.questions.map((question, idx) => {
+                const answer = lesson.answers[idx] || "";
+                return `
+                    <article class="question" data-question-index="${idx}">
+                        <p class="question-title">${idx + 1}. ${question}</p>
+                        <textarea class="answer-input" placeholder="Введите ваш ответ..."></textarea>
+                        <div class="answer-review" data-review>
+                            <p class="answer-key"><strong>Ответ для проверки:</strong> ${answer}</p>
+                            <div class="mark-tools">
+                                <button class="mark-btn" type="button" data-mark="correct">Верно</button>
+                                <button class="mark-btn" type="button" data-mark="wrong">Неверно</button>
+                                <span class="mark-indicator" data-indicator>•</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+
+            questionsWrap.innerHTML = questionMarkup;
+
+            const totalQuestions = lesson.questions.length;
+            const lessonKey = `neo_lesson_${lessonId}`;
+            const resultKey = `neo_lesson_result_${lessonId}`;
+
+            const questionNodes = Array.from(document.querySelectorAll(".question"));
+            const showBtn = document.getElementById("show-answers");
+            const saveExitBtn = document.getElementById("save-exit");
+            const resetBtn = document.getElementById("reset-answers");
+
+            function createDefaultState() {
+                return {
+                    answers: Array(totalQuestions).fill(""),
+                    marks: Array(totalQuestions).fill(null),
+                    answersVisible: false
+                };
+            }
+
+            function readState() {
+                try {
+                    const raw = localStorage.getItem(lessonKey);
+                    if (!raw) return createDefaultState();
+                    const defaults = createDefaultState();
+                    const parsed = JSON.parse(raw);
+                    return {
+                        answers: Array.isArray(parsed.answers) ? parsed.answers.slice(0, totalQuestions) : defaults.answers,
+                        marks: Array.isArray(parsed.marks) ? parsed.marks.slice(0, totalQuestions) : defaults.marks,
+                        answersVisible: Boolean(parsed.answersVisible)
+                    };
+                } catch (e) {
+                    return createDefaultState();
+                }
+            }
+
+            function writeState(state) {
+                localStorage.setItem(lessonKey, JSON.stringify(state));
+            }
+
+            function updateScore(state) {
+                const correct = state.marks.filter((m) => m === true).length;
+                const reviewed = state.marks.filter((m) => m !== null).length;
+
+                if (reviewed === 0) {
+                    scoreBadge.textContent = "Результат: не оценено";
+                    localStorage.removeItem(resultKey);
+                    return;
+                }
+
+                const percent = Math.round((correct / totalQuestions) * 100);
+                scoreBadge.textContent = `Результат: ${correct}/${totalQuestions} (${percent}%)`;
+                localStorage.setItem(resultKey, JSON.stringify({
+                    score: correct,
+                    total: totalQuestions,
+                    reviewed: reviewed,
+                    percent: percent
+                }));
+            }
+
+            function applyState(state) {
+                questionNodes.forEach((node, idx) => {
+                    const input = node.querySelector(".answer-input");
+                    const review = node.querySelector("[data-review]");
+                    const indicator = node.querySelector("[data-indicator]");
+                    const buttons = Array.from(node.querySelectorAll(".mark-btn"));
+                    input.value = state.answers[idx] || "";
+
+                    if (state.answersVisible) {
+                        review.classList.add("visible");
+                    } else {
+                        review.classList.remove("visible");
+                    }
+
+                    buttons.forEach((btn) => btn.classList.remove("is-selected"));
+                    indicator.classList.remove("correct", "wrong");
+
+                    if (state.marks[idx] === true) {
+                        indicator.textContent = "✓";
+                        indicator.classList.add("correct");
+                        const btn = node.querySelector('.mark-btn[data-mark="correct"]');
+                        if (btn) btn.classList.add("is-selected");
+                    } else if (state.marks[idx] === false) {
+                        indicator.textContent = "✗";
+                        indicator.classList.add("wrong");
+                        const btn = node.querySelector('.mark-btn[data-mark="wrong"]');
+                        if (btn) btn.classList.add("is-selected");
+                    } else {
+                        indicator.textContent = "•";
+                    }
+                });
+
+                updateScore(state);
+            }
+
+            let state = readState();
+            applyState(state);
+
+            questionNodes.forEach((node, idx) => {
+                const input = node.querySelector(".answer-input");
+                const markButtons = Array.from(node.querySelectorAll(".mark-btn"));
+
+                input.addEventListener("input", () => {
+                    state.answers[idx] = input.value;
+                    writeState(state);
+                });
+
+                markButtons.forEach((btn) => {
+                    btn.addEventListener("click", () => {
+                        state.marks[idx] = btn.dataset.mark === "correct";
+                        writeState(state);
+                        applyState(state);
+                    });
+                });
+            });
+
+            showBtn.addEventListener("click", () => {
+                state.answersVisible = true;
+                writeState(state);
+                applyState(state);
+            });
+
+            resetBtn.addEventListener("click", () => {
+                state = createDefaultState();
+                writeState(state);
+                localStorage.removeItem(resultKey);
+                applyState(state);
+            });
+
+            saveExitBtn.addEventListener("click", () => {
+                writeState(state);
+                updateScore(state);
+                window.location.href = "learning.html";
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neologisms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --page-bg: #f5f8ff;
+            --panel-bg: #ffffff;
+            --ink: #172133;
+            --muted: #52607d;
+            --accent: #456cf0;
+            --accent-soft: #e8eeff;
+            --header-height: 84px;
+            --radius: 20px;
+            --shadow: 0 20px 45px rgba(17, 27, 56, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(180deg, #f9fbff 0%, #eef3ff 100%);
+            color: var(--ink);
+            font-family: "Raleway", Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(6, 12, 33, 0.55) 0%, rgba(6, 12, 33, 0.68) 100%);
+            z-index: 1;
+        }
+
+        .hero-header {
+            position: fixed;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            pointer-events: auto;
+            transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .hero-header.is-dark .hero-nav {
+            background: rgba(17, 27, 56, 0.58);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 12px 28px rgba(7, 14, 33, 0.3);
+        }
+
+        .hero-nav a {
+            display: inline-flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            min-width: 134px;
+            height: 42px;
+            padding: 0 16px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border-radius: 999px;
+            isolation: isolate;
+            transition: color 0.25s ease, transform 0.25s ease, text-shadow 0.25s ease;
+        }
+
+        .hero-nav a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.14));
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 20px rgba(4, 11, 29, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: -1;
+        }
+
+        .hero-nav a:hover,
+        .hero-nav a:focus-visible {
+            color: #ffffff;
+            transform: translateY(-2px);
+            text-shadow: 0 6px 14px rgba(8, 17, 40, 0.42);
+        }
+
+        .hero-nav a:hover::before,
+        .hero-nav a:focus-visible::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hero-nav a:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.45);
+            outline-offset: 2px;
+        }
+
+        .hero-title-wrap {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            padding: 0 20px;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .hero-title-wrap > div {
+            width: min(1100px, 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-14px);
+        }
+
+        .hero-title {
+            margin: 0;
+            width: 100%;
+            color: #ffffff;
+            font-size: clamp(2rem, 5vw, 4.8rem);
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            line-height: 1.12;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        .hero-subtitle {
+            margin: 12px auto 0;
+            width: min(820px, 95%);
+            color: rgba(255, 255, 255, 0.9);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 600;
+        }
+
+        .section {
+            width: min(1120px, calc(100% - 32px));
+            margin: 34px auto;
+            padding: 36px;
+            background: var(--panel-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            margin: 0 0 10px;
+            font-size: clamp(1.55rem, 2.6vw, 2.2rem);
+            font-weight: 800;
+        }
+
+        .section-lead {
+            margin: 0 0 26px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .chip-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 0 0 26px;
+            padding: 0;
+            list-style: none;
+        }
+
+        .chip {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #2448c7;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
+            border: 1px solid #dfe7ff;
+            border-radius: 16px;
+            padding: 18px 18px 16px;
+        }
+
+        .card h3,
+        .card h4 {
+            margin: 0 0 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .card p {
+            margin: 0;
+            color: #344362;
+            font-weight: 600;
+        }
+
+        .image-break {
+            width: 100%;
+            margin: 40px 0;
+            min-height: 34vh;
+            background-image: linear-gradient(180deg, rgba(13, 24, 59, 0.45), rgba(13, 24, 59, 0.66)), url("assets/img/ftl.jpeg");
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            border-top: 1px solid rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            display: grid;
+            place-items: center;
+            text-align: center;
+            color: #ffffff;
+            padding: 20px;
+        }
+
+        .image-break h2 {
+            margin: 0;
+            font-size: clamp(1.6rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: 0.03em;
+        }
+
+        .tasks-list {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 10px;
+        }
+
+        .tasks-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #f3f7ff;
+            border: 1px solid #dce7ff;
+            font-weight: 600;
+            color: #2f3d5d;
+        }
+
+        .tasks-list li::before {
+            content: "✓";
+            color: #3058de;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .subsection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .subsection {
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid #dde6ff;
+            background: #fbfcff;
+        }
+
+        .subsection h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            color: #233867;
+        }
+
+        .subsection p {
+            margin: 0;
+            color: #445471;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .references {
+            margin: 0;
+            padding-left: 20px;
+            display: grid;
+            gap: 10px;
+            font-weight: 600;
+            color: #344362;
+        }
+
+        .references em {
+            color: #1e2b46;
+        }
+
+        .site-footer {
+            margin-top: 18px;
+            padding: 42px 20px 28px;
+            color: #d8e1ff;
+            background: linear-gradient(135deg, #101a36 0%, #1d2f63 100%);
+        }
+
+        .footer-inner {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .site-footer h3 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 1.05rem;
+        }
+
+        .site-footer p,
+        .site-footer a {
+            margin: 0 0 8px;
+            color: #d8e1ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .site-footer a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            width: min(1120px, 100%);
+            margin: 18px auto 0;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #becbf3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 920px) {
+            .section {
+                padding: 24px 18px;
+                margin: 20px auto;
+            }
+
+            .grid-2,
+            .subsection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                border-radius: 18px;
+            }
+
+            .hero-nav a {
+                min-width: 120px;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <img class="hero-bg" src="assets/img/ftl.jpeg" alt="Neologisms background">
+        <div class="hero-header">
+            <nav class="hero-nav" aria-label="Main navigation">
+                <a href="index.html">Главная</a>
+                <a href="learning.html">Обучение</a>
+                <a href="statistics.html">Статистика</a>
+            </nav>
+        </div>
+        <div class="hero-title-wrap">
+            <div>
+                <h1 class="hero-title" id="home">Neologisms in Contemporary English</h1>
+                <p class="hero-subtitle">How digital communication, society and education reshape English vocabulary in real time.</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section" id="information">
+            <h2 class="section-title">Introduction</h2>
+            <p class="section-lead">A modern look at how English evolves through technology, social interaction, and education.</p>
+
+            <ul class="chip-row">
+                <li class="chip">DIGITAL ERA</li>
+                <li class="chip">2015-2024 DATA WINDOW</li>
+                <li class="chip">EDUCATION FOCUS</li>
+                <li class="chip">CORPUS APPROACH</li>
+            </ul>
+
+            <p>The English language is spoken across the globe and remains one of the most dynamic language systems today. Native speakers, second-language users, and students all contribute to its development. As a result, neologisms (new words) emerge constantly, especially in online communication, media, and everyday speech.</p>
+            <p>In earlier periods, new words were adopted slowly over many years. Today, digital communication accelerates this process dramatically, allowing neologisms to spread worldwide in a very short time.</p>
+
+            <div class="grid-2">
+                <article class="card">
+                    <h3>Problem</h3>
+                    <p>Modern English changes quickly, but school textbooks do not keep up. Many students struggle to understand and use new vocabulary that appears online.</p>
+                </article>
+                <article class="card">
+                    <h3>Relevance</h3>
+                    <p>Technology and internet communication intensify lexical change, making neologisms a central part of contemporary language learning.</p>
+                </article>
+                <article class="card">
+                    <h3>Hypothesis</h3>
+                    <p>Many neologisms from 2015-2024 originated in digital communication and reflect technological and social change; focused exercises and questionnaires can improve student recognition and usage.</p>
+                </article>
+                <article class="card">
+                    <h3>Goal</h3>
+                    <p>Identify how neologisms are formed and function in modern English, trace emergence trends, and assess influence on society.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section" id="learning">
+            <h2 class="section-title">Research Tasks and Educational Focus</h2>
+            <p class="section-lead">The project combines linguistic analysis with practical school-level teaching tools.</p>
+
+            <ul class="tasks-list">
+                <li>Study neologisms and their varieties.</li>
+                <li>Analyze mechanisms and origins of new neologisms.</li>
+                <li>Collect examples from 2015 to 2024 and build a focused corpus.</li>
+                <li>Examine usage in internet communication, media, and daily life.</li>
+                <li>Investigate usage patterns and social impact.</li>
+                <li>Explore teaching approaches in English language education.</li>
+                <li>Design a questionnaire to assess recognition and correct use.</li>
+                <li>Develop exercises for effective acquisition by learners.</li>
+            </ul>
+
+            <div class="grid-2" style="margin-top: 16px;">
+                <article class="card">
+                    <h4>Object</h4>
+                    <p>Contemporary English language.</p>
+                </article>
+                <article class="card">
+                    <h4>Subject</h4>
+                    <p>Neologisms of the last decade: origin, structure, semantic value, and role in language development.</p>
+                </article>
+            </div>
+            <article class="card" style="margin-top: 16px;">
+                <h4>Research Novelty</h4>
+                <p>The study focuses on the latest decade, helping identify current and still-emerging vocabulary trends.</p>
+            </article>
+        </section>
+
+        <div class="image-break">
+            <h2>Theoretical Part: Language in Motion</h2>
+        </div>
+
+        <section class="section">
+            <h2 class="section-title">Literature Review</h2>
+            <p class="section-lead">Neologisms work as linguistic sensors: they capture social, technological, and cultural shifts while English adapts in real time.</p>
+
+            <div class="subsection-grid">
+                <article class="subsection">
+                    <h4>1.1 Word Formation Processes</h4>
+                    <p>Compounding, blending, clipping, affixation, and borrowing remain key mechanisms. Examples: <em>cybersecurity</em>, <em>hangry</em>, <em>post-truth</em>.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.2 Digital Communication</h4>
+                    <p>Social media speeds up creation and spread of terms like <em>selfie</em>, <em>vlogger</em>, <em>clickbait</em>, and <em>influencer</em>.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.3 Sources of Neologisms</h4>
+                    <p>Technology, science, politics, health crises, and digital culture produced terms such as <em>deepfake</em>, <em>metaverse</em>, and <em>infodemic</em>.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.4 Challenges and Implications</h4>
+                    <p>Meaning instability, delayed dictionary recognition, and translation barriers complicate teaching and standardization.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.5 Teaching Neologisms</h4>
+                    <p>Thematic clusters, contextual examples, and etymological explanations support retention and meaningful classroom use.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.6 Corpus Linguistics</h4>
+                    <p>Corpus tools reveal frequency, collocations, and whether a neologism is becoming stable or fading out.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.7 Globalization</h4>
+                    <p>Global communication accelerates adoption of English neologisms but also raises concerns about linguistic diversity.</p>
+                </article>
+                <article class="subsection">
+                    <h4>1.8 Conclusion</h4>
+                    <p>Neologisms are essential for understanding contemporary English and for designing relevant language education.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">List of References</h2>
+            <ol class="references">
+                <li>Erdanova S.A., Islamova T.R. <em>Neologisms in Modern English</em>. CyberLeninka.</li>
+                <li>Ibragimova S. A. <em>Neologisms and Loanwords in Modern English</em>. Web of Teachers, 2024.</li>
+                <li>Kiseleva N. Z. <em>The Sources of Neologisms in Modern English Language</em>. SSRN.</li>
+                <li>Koltsova E. A. <em>Neologisms in the English Language in the 21st Century</em>. RUDN Journal, 2017.</li>
+                <li>Raquel O. C. <em>English Neologisms in Modern Times</em>. Universidad del Pais Vasco, 2021.</li>
+                <li>Salomova S. C. <em>Neologisms in Modern Scientific English</em>. Journal of IQRO, 2025.</li>
+                <li>Telmanova D. S. <em>Neologisms in Modern English: How New Words Are Formed</em>. 2025.</li>
+            </ol>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <section>
+                <h3>Neologisms Project</h3>
+                <p>Educational and research platform about modern English neologisms, their origin, usage, and role in communication.</p>
+            </section>
+            <section>
+                <h3>Navigation</h3>
+                <p><a href="index.html">Главная</a></p>
+                <p><a href="learning.html">Обучение</a></p>
+                <p><a href="statistics.html">Статистика</a></p>
+            </section>
+            <section>
+                <h3>Contact</h3>
+                <p>Email: hello@neologisms.local</p>
+                <p>Language: English / Russian</p>
+                <p>Updated: 2026</p>
+            </section>
+        </div>
+        <div class="footer-bottom">© 2026 Neologisms in Contemporary English</div>
+    </footer>
+    <script>
+        (function () {
+            const hero = document.querySelector(".hero");
+            const header = document.querySelector(".hero-header");
+            if (!hero || !header) {
+                return;
+            }
+
+            const updateHeaderState = () => {
+                const heroBottom = hero.getBoundingClientRect().bottom;
+                const triggerOffset = 96;
+                header.classList.toggle("is-dark", heroBottom <= triggerOffset);
+            };
+
+            updateHeaderState();
+            window.addEventListener("scroll", updateHeaderState, { passive: true });
+            window.addEventListener("resize", updateHeaderState);
+        })();
+    </script>
+</body>
+</html>

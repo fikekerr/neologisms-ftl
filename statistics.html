@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Статистика | Neologisms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --header-height: 84px;
+            --ink: #172133;
+            --muted: #52607d;
+            --panel: #ffffff;
+            --bg: linear-gradient(180deg, #f9fbff 0%, #eef3ff 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Raleway", Arial, sans-serif;
+            color: var(--ink);
+            background: var(--bg);
+            line-height: 1.7;
+        }
+
+        .header-wrap {
+            position: fixed;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 999px;
+            background: rgba(17, 27, 56, 0.72);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+        }
+
+        .hero-nav a {
+            display: inline-flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            min-width: 134px;
+            height: 42px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            isolation: isolate;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .hero-nav a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.14));
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 20px rgba(4, 11, 29, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: -1;
+        }
+
+        .hero-nav a:hover::before,
+        .hero-nav a:focus-visible::before,
+        .hero-nav a.is-active::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hero-nav a:hover,
+        .hero-nav a:focus-visible {
+            transform: translateY(-2px);
+        }
+
+        .hero-nav a:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.45);
+            outline-offset: 2px;
+        }
+
+        main {
+            width: min(1120px, calc(100% - 32px));
+            margin: 124px auto 40px;
+            display: grid;
+            gap: 22px;
+        }
+
+        .section {
+            background: var(--panel);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 45px rgba(17, 27, 56, 0.1);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        p {
+            margin: 0 0 14px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .stats-image-wrap {
+            margin-top: 14px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid #d9e4ff;
+            box-shadow: 0 12px 28px rgba(17, 27, 56, 0.12);
+            background: #f5f8ff;
+        }
+
+        .stats-image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .caption {
+            margin-top: 12px;
+            font-size: 0.92rem;
+            color: #6a7897;
+            font-weight: 600;
+        }
+
+        .analysis-list {
+            margin: 0;
+            padding-left: 20px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .analysis-list li {
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .site-footer {
+            margin: 8px auto 0;
+            padding: 42px 20px 28px;
+            color: #d8e1ff;
+            background: linear-gradient(135deg, #101a36 0%, #1d2f63 100%);
+        }
+
+        .footer-inner {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .site-footer h3 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 1.05rem;
+        }
+
+        .site-footer p,
+        .site-footer a {
+            margin: 0 0 8px;
+            color: #d8e1ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .site-footer a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            width: min(1120px, 100%);
+            margin: 18px auto 0;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #becbf3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 920px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-wrap">
+        <nav class="hero-nav" aria-label="Main navigation">
+            <a href="index.html">Главная</a>
+            <a href="learning.html">Обучение</a>
+            <a class="is-active" href="statistics.html">Статистика</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <h1>Статистика</h1>
+            <p>Ниже представлена статистика учеников, прошедших тест <strong>до начала обучения</strong> на платформе.</p>
+            <div class="stats-image-wrap">
+                <img class="stats-image" src="assets/img/statistic.png" alt="Статистика учеников до обучения">
+            </div>
+            <p class="caption">Рисунок: результаты входного тестирования до прохождения уроков.</p>
+        </section>
+
+        <section class="section">
+            <h2>Статистика после обучения</h2>
+            <p>Ниже показаны результаты учеников <strong>после прохождения обучающих уроков</strong> на платформе.</p>
+            <div class="stats-image-wrap">
+                <img class="stats-image" src="assets/img/statistic_after.png" alt="Статистика учеников после обучения">
+            </div>
+            <p class="caption">Рисунок: распределение баллов после завершения курса и самопроверки.</p>
+        </section>
+
+        <section class="section">
+            <h2>Анализ проделанной работы: влияние обучения на учеников</h2>
+            <ul class="analysis-list">
+                <li>После прохождения курса распределение результатов заметно сместилось вправо: стало больше высоких баллов и меньше низких.</li>
+                <li>Медианный результат вырос до 13 из 15, что означает улучшение уровня большинства учеников, а не только отдельных сильных участников.</li>
+                <li>Средний балл также повысился, что подтверждает общий положительный эффект от последовательной работы с заданиями.</li>
+                <li>Ученики стали увереннее работать с неологизмами в контексте, лучше распознают словообразовательные модели и точнее используют новые слова в предложениях.</li>
+                <li>Формат самопроверки (эталонные ответы + самооценка) помог сделать обучение осознанным: школьники видят свои слабые места и быстрее закрепляют материал.</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <section>
+                <h3>Neologisms Project</h3>
+                <p>Statistical view of modern neologisms: trends, frequency, and usage context in contemporary English.</p>
+            </section>
+            <section>
+                <h3>Navigation</h3>
+                <p><a href="index.html">Главная</a></p>
+                <p><a href="learning.html">Обучение</a></p>
+                <p><a href="statistics.html">Статистика</a></p>
+            </section>
+            <section>
+                <h3>Contact</h3>
+                <p>Email: hello@neologisms.local</p>
+                <p>Research and analytics</p>
+                <p>Updated: 2026</p>
+            </section>
+        </div>
+        <div class="footer-bottom">© 2026 Neologisms in Contemporary English</div>
+    </footer>
+</body>
+</html>

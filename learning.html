@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучение | Neologisms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --header-height: 84px;
+            --ink: #172133;
+            --muted: #52607d;
+            --panel: #ffffff;
+            --bg: linear-gradient(180deg, #f9fbff 0%, #eef3ff 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Raleway", Arial, sans-serif;
+            color: var(--ink);
+            background: var(--bg);
+            line-height: 1.7;
+        }
+
+        .header-wrap {
+            position: fixed;
+            top: 14px;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .hero-nav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            border-radius: 999px;
+            background: rgba(17, 27, 56, 0.72);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: auto;
+        }
+
+        .hero-nav a {
+            display: inline-flex;
+            position: relative;
+            align-items: center;
+            justify-content: center;
+            min-width: 134px;
+            height: 42px;
+            padding: 0 16px;
+            border-radius: 999px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            isolation: isolate;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+
+        .hero-nav a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.14));
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 8px 20px rgba(4, 11, 29, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            opacity: 0;
+            transform: scale(0.94);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: -1;
+        }
+
+        .hero-nav a:hover::before,
+        .hero-nav a:focus-visible::before,
+        .hero-nav a.is-active::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hero-nav a:hover,
+        .hero-nav a:focus-visible {
+            transform: translateY(-2px);
+        }
+
+        .hero-nav a:focus-visible {
+            outline: 2px solid rgba(255, 255, 255, 0.45);
+            outline-offset: 2px;
+        }
+
+        main {
+            width: min(1120px, calc(100% - 32px));
+            margin: 124px auto 40px;
+            display: grid;
+            gap: 22px;
+        }
+
+        .section {
+            background: var(--panel);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 45px rgba(17, 27, 56, 0.1);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+        }
+
+        h2 {
+            margin: 0 0 10px;
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        p {
+            margin: 0 0 14px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .lesson-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #d5e0ff;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #ffffff 0%, #f4f7ff 100%);
+            color: #1f3159;
+            font-family: "Raleway", Arial, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-align: left;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(16, 30, 67, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .lesson-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(16, 30, 67, 0.14);
+        }
+
+        .results-list {
+            display: grid;
+            gap: 10px;
+            margin: 0 0 16px;
+        }
+
+        .result-item {
+            margin: 0;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid #dfe7ff;
+            background: #f8faff;
+        }
+
+        .reset-btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #8d95a8, #71798c);
+            color: #ffffff;
+            font-family: "Raleway", Arial, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+        }
+
+        .site-footer {
+            margin: 8px auto 0;
+            padding: 42px 20px 28px;
+            color: #d8e1ff;
+            background: linear-gradient(135deg, #101a36 0%, #1d2f63 100%);
+        }
+
+        .footer-inner {
+            width: min(1120px, 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            gap: 24px;
+        }
+
+        .site-footer h3 {
+            margin: 0 0 10px;
+            color: #ffffff;
+            font-size: 1.05rem;
+        }
+
+        .site-footer p,
+        .site-footer a {
+            margin: 0 0 8px;
+            color: #d8e1ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .site-footer a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            width: min(1120px, 100%);
+            margin: 18px auto 0;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #becbf3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 920px) {
+            .footer-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-wrap">
+        <nav class="hero-nav" aria-label="Main navigation">
+            <a href="index.html">Главная</a>
+            <a class="is-active" href="learning.html">Обучение</a>
+            <a href="statistics.html">Статистика</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="section">
+            <h1>Обучение</h1>
+            <p>Суть этой обучающей платформы — помочь школьникам и изучающим английский уверенно понимать и использовать современные неологизмы, которые появляются в соцсетях, медиа и повседневной онлайн-коммуникации.</p>
+            <p>Платформа объединяет краткие объяснения происхождения новых слов, тематические примеры, практические задания и проверку понимания. Цель — не просто выучить список слов, а научиться распознавать значение неологизмов в контексте и применять их уместно в речи и письме.</p>
+        </section>
+
+        <section class="section">
+            <h2>Уроки</h2>
+            <p>Подборка уроков-заданий по материалам worksheet: от word formation до работы с контекстом и переводом современных неологизмов.</p>
+            <div class="lessons-grid">
+                <a class="lesson-btn" href="lesson.html?lesson=1">Урок 1 — Разбор неологизмов на исходные слова</a>
+                <a class="lesson-btn" href="lesson.html?lesson=2">Урок 2 — Создание неологизмов из двух слов</a>
+                <a class="lesson-btn" href="lesson.html?lesson=3">Урок 3 — Понимание значения по контексту</a>
+                <a class="lesson-btn" href="lesson.html?lesson=4">Урок 4 — Вставка неологизмов в предложения</a>
+                <a class="lesson-btn" href="lesson.html?lesson=5">Урок 5 — Перевод предложений с неологизмами</a>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>Результаты</h2>
+            <div class="results-list">
+                <p class="result-item" data-lesson-result="1"><strong>Урок 1:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.</p>
+                <p class="result-item" data-lesson-result="2"><strong>Урок 2:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.</p>
+                <p class="result-item" data-lesson-result="3"><strong>Урок 3:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.</p>
+                <p class="result-item" data-lesson-result="4"><strong>Урок 4:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.</p>
+                <p class="result-item" data-lesson-result="5"><strong>Урок 5:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.</p>
+            </div>
+            <button class="reset-btn" id="reset-progress" type="button">Сбросить прогресс</button>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <section>
+                <h3>Neologisms Project</h3>
+                <p>Platform for learning contemporary English neologisms with practical tasks and contextual examples.</p>
+            </section>
+            <section>
+                <h3>Navigation</h3>
+                <p><a href="index.html">Главная</a></p>
+                <p><a href="learning.html">Обучение</a></p>
+                <p><a href="statistics.html">Статистика</a></p>
+            </section>
+            <section>
+                <h3>Contact</h3>
+                <p>Email: hello@neologisms.local</p>
+                <p>For students and teachers</p>
+                <p>Updated: 2026</p>
+            </section>
+        </div>
+        <div class="footer-bottom">© 2026 Neologisms in Contemporary English</div>
+    </footer>
+    <script>
+        (function () {
+            const resultNodes = Array.from(document.querySelectorAll("[data-lesson-result]"));
+            const resetBtn = document.getElementById("reset-progress");
+
+            const renderResults = () => {
+                resultNodes.forEach((node) => {
+                    const lessonId = node.dataset.lessonResult;
+                    const raw = localStorage.getItem(`neo_lesson_result_${lessonId}`);
+                    if (!raw) {
+                        node.innerHTML = `<strong>Урок ${lessonId}:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.`;
+                        return;
+                    }
+
+                    try {
+                        const result = JSON.parse(raw);
+                        node.innerHTML = `<strong>Урок ${lessonId}:</strong> ${result.score}/${result.total} (${result.percent}%), проверено: ${result.reviewed}.`;
+                    } catch (e) {
+                        node.innerHTML = `<strong>Урок ${lessonId}:</strong> Результат не сохранен. После выполнения появится процент правильных ответов.`;
+                    }
+                });
+            };
+
+            resetBtn.addEventListener("click", () => {
+                const isConfirmed = window.confirm("Сбросить весь прогресс по урокам? Это действие нельзя отменить.");
+                if (!isConfirmed) {
+                    return;
+                }
+
+                for (let i = 1; i <= 5; i += 1) {
+                    localStorage.removeItem(`neo_lesson_result_${i}`);
+                    localStorage.removeItem(`neo_lesson_${i}`);
+                }
+                renderResults();
+            });
+
+            renderResults();
+        })();
+    </script>
+</body>
+</html>
